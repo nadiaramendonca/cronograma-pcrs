@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC-RS: PROTOCOLO FINAL 💀</title>
+  <style>
+    :root {
+      --bg-color: #050505;
+      --card-bg: #111111;
+      --neon-red: #ff073a;
+      --neon-dim: rgba(255, 7, 58, 0.2);
+      --text-main: #e0e0e0;
+      --text-muted: #666;
+      --gold: #ffd700;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 20px;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* --- CABEÇALHO E TIMER --- */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 2px solid var(--neon-red);
+      padding-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin: 0;
+      text-shadow: 0 0 15px var(--neon-red);
+    }
+
+    .skull-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .motivational {
+      font-size: 1.2rem;
+      color: var(--neon-red);
+      font-weight: 800;
+      margin-top: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; text-shadow: 0 0 10px var(--neon-red); }
+      50% { opacity: 0.7; text-shadow: 0 0 20px var(--neon-red); }
+      100% { opacity: 1; text-shadow: 0 0 10px var(--neon-red); }
+    }
+
+    .countdown-box {
+      background: #000;
+      border: 1px solid var(--neon-red);
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+      box-shadow: 0 0 15px var(--neon-dim);
+      display: inline-block;
+      min-width: 300px;
+    }
+
+    .timer {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- DASHBOARD ESTRATÉGICO --- */
+    .strategy-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-left: 4px solid var(--neon-red);
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    .stat-title {
+      color: var(--neon-red);
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    /* --- GRID SEMANAL --- */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .day-card {
+      background: var(--card-bg);
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .day-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--neon-red);
+      box-shadow: 0 0 15px var(--neon-dim);
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .day-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    /* --- LISTA DE TAREFAS --- */
+    .task-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 4px;
+    }
+
+    .checkbox-wrapper {
+      margin-right: 12px;
+    }
+
+    input[type="checkbox"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--text-muted);
+      border-radius: 3px;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+    }
+
+    input[type="checkbox"]:checked {
+      border-color: var(--neon-red);
+      background: var(--neon-red);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      left: 3px;
+      top: -1px;
+    }
+
+    .task-content {
+      flex: 1;
+    }
+
+    .subject-name {
+      display: block;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    /* --- TAGS DE PESO --- */
+    .tag {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-left: 5px;
+      display: inline-block;
+    }
+
+    .tag-30 { background: #b91c1c; color: #fff; border: 1px solid #ff0000; } /* Português */
+    .tag-15 { background: #c2410c; color: #fff; } /* Informática */
+    .tag-10 { background: #a16207; color: #fff; } /* RLM */
+    .tag-8 { background: #1e3a8a; color: #fff; } /* Contab/Estat */
+    .tag-sniper { background: var(--gold); color: #000; border: 1px solid #fff; } /* Leg. Estatutária */
+    .tag-rotativo { background: #333; color: #aaa; } /* Direito */
+
+    /* --- RODAPÉ --- */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      border-top: 1px solid #333;
+      padding-top: 20px;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <header>
+    <span class="skull-icon">💀</span>
+    <h1>PC-RS: OPERAÇÃO FINAL</h1>
+    <div class="motivational">ESSA É A TUA CHANCE, PORRA!</div>
+    
+    <div class="countdown-box">
+      <div class="timer" id="timer">00d 00h 00m 00s</div>
+      <div class="timer-label">TEMPO RESTANTE PARA A GLÓRIA</div>
+    </div>
+  </header>
+
+  <!-- DASHBOARD ESTRATÉGICO -->
+  <div class="strategy-dashboard">
+    <div class="stat-card">
+      <div class="stat-title">O NÚCLEO (71% DA PROVA)</div>
+      <div class="stat-value">Português, Informática, RLM, Contabilidade, Estatística.</div>
+      <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Estudo Diário Obrigatório.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">O SNIPER (4% GARANTIDO)</div>
+      <div class="stat-value">Legislação Estatutária</div>
+      <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Matéria pequena, retorno alto.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">O RODÍZIO (25% RESTANTE)</div>
+      <div class="stat-value">Penal, Processo, Const, Adm, Humanos.</div>
+      <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Alternar para não perder tempo.</div>
+    </div>
+  </div>
+
+  <!-- CRONOGRAMA SEMANAL -->
+  <div class="week-grid">
+
+    <!-- SEGUNDA -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-name">Segunda-feira</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="seg1"></div>
+          <div class="task-content">
+            <span class="subject-name">Língua Portuguesa <span class="tag tag-30">30%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="seg2"></div>
+          <div class="task-content">
+            <span class="subject-name">Informática <span class="tag tag-15">15%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="seg3"></div>
+          <div class="task-content">
+            <span class="subject-name">Legislação Estatutária <span class="tag tag-sniper">SNIPER</span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TERÇA -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-name">Terça-feira</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="ter1"></div>
+          <div class="task-content">
+            <span class="subject-name">Raciocínio Lógico <span class="tag tag-10">10%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="ter2"></div>
+          <div class="task-content">
+            <span class="subject-name">Contabilidade Geral <span class="tag tag-8">8%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="ter3"></div>
+          <div class="task-content">
+            <span class="subject-name">Dir. Penal / Processo <span class="tag tag-rotativo">ROTATIVO</span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- QUARTA -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-name">Quarta-feira</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="qua1"></div>
+          <div class="task-content">
+            <span class="subject-name">Língua Portuguesa <span class="tag tag-30">30%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="qua2"></div>
+          <div class="task-content">
+            <span class="subject-name">Estatística <span class="tag tag-8">8%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="qua3"></div>
+          <div class="task-content">
+            <span class="subject-name">Dir. Constitucional <span class="tag tag-rotativo">ROTATIVO</span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- QUINTA -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-name">Quinta-feira</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="qui1"></div>
+          <div class="task-content">
+            <span class="subject-name">Informática <span class="tag tag-15">15%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="qui2"></div>
+          <div class="task-content">
+            <span class="subject-name">Contabilidade Geral <span class="tag tag-8">8%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="qui3"></div>
+          <div class="task-content">
+            <span class="subject-name">Dir. Administrativo <span class="tag tag-rotativo">ROTATIVO</span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SEXTA -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-name">Sexta-feira</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="sex1"></div>
+          <div class="task-content">
+            <span class="subject-name">Raciocínio Lógico <span class="tag tag-10">10%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="sex2"></div>
+          <div class="task-content">
+            <span class="subject-name">Estatística <span class="tag tag-8">8%</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="sex3"></div>
+          <div class="task-content">
+            <span class="subject-name">Dir. Humanos <span class="tag tag-rotativo">ROTATIVO</span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SÁBADO -->
+    <div class="day-card" style="border-color: var(--gold);">
+      <div class="day-header">
+        <span class="day-name" style="color: var(--gold);">Sábado (Ouro)</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="sab1"></div>
+          <div class="task-content">
+            <span class="subject-name">REDAÇÃO <span class="tag tag-30">CRUCIAL</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="sab2"></div>
+          <div class="task-content">
+            <span class="subject-name">Legislação Estatutária <span class="tag tag-sniper">SNIPER</span></span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="sab3"></div>
+          <div class="task-content">
+            <span class="subject-name">Revisão de Erros da Semana</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- DOMINGO -->
+    <div class="day-card" style="border-color: var(--neon-red);">
+      <div class="day-header">
+        <span class="day-name" style="color: var(--neon-red);">Domingo (Guerra)</span>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="dom1"></div>
+          <div class="task-content">
+            <span class="subject-name">SIMULADO COMPLETO (100Q)</span>
+          </div>
+        </li>
+        <li class="task-item">
+          <div class="checkbox-wrapper"><input type="checkbox" id="dom2"></div>
+          <div class="task-content">
+            <span class="subject-name">Correção Analítica</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    CREATOR NADIARA • FOCO TOTAL • SEM DESCULPAS
+  </footer>
+
+</div>
+
+<script>
+  // DATA DA PROVA: 18/01/2026 às 08:00:00
+  const examDate = new Date("2026-01-18T08:00:00").getTime();
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const distance = examDate - now;
+
+    if (distance < 0) {
+      document.getElementById("timer").innerHTML = "A HORA CHEGOU!";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("timer").innerHTML = 
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
+  // Salvar progresso (Checkbox)
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(box => {
+    const id = box.id;
+    const saved = localStorage.getItem(id);
+    if (saved === 'true') box.checked = true;
+
+    box.addEventListener('change', () => {
+      localStorage.setItem(id, box.checked);
+    });
+  });
+</script>
+
+</body>
+</html>
